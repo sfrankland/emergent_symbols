@@ -149,8 +149,8 @@ def test(args, model, device, all_imgs, test_loader, loss_results, acc_results):
 	return loss_results, acc_results
 
 def main():
-	loss_results = {}
-	acc_results = {}
+	loss_results = ()
+	acc_results = ()
 	# Settings
 	parser = argparse.ArgumentParser()
 	# Model settings
