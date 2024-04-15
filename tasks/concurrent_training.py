@@ -34,11 +34,6 @@ for i in range(0,max_int-2):
     #add 2: target is i+2
     twos_y_[i,:] = k[i+2,:]
 
-	# Dimensionality of multiple-choice output
-	y_dim = 2
-	# Sequence length
-	seq_len = 2
-
 	# Create training and test sets
 	train_set = {'seq_ind': all_train_seq, 'y': all_train_targ}
 	test_set = {'seq_ind': all_test_seq, 'y': all_test_targ}
