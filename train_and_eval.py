@@ -146,7 +146,7 @@ def test(args, model, device, all_imgs, test_loader):
 	test_f.close()
 	loss_results.append = avg_loss
 	acc_results.append = avg_acc
-return loss_results, acc_results
+	return loss_results, acc_results
 
 def main():
 	loss_results = {}
