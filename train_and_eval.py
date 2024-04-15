@@ -237,3 +237,4 @@ if __name__ == '__main__':
 	loss_results, acc_results = main()
 	import matplotlib.pyplot as plt
 	plt.plot(loss_results)
+	plt.show()
