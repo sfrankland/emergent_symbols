@@ -94,7 +94,7 @@ def train(args, model, device, optimizer, epoch, all_imgs, train_loader):
 							   '{:.2f}'.format(acc) + '\n')
 	train_prog_f.close()
 
-def test(args, model, device, all_imgs, test_loader):
+def test(args, model, device, all_imgs, test_loader, loss_results, acc_results):
 	log.info('Evaluating on test set...')
 	# Set to eval mode
 	model.eval()
