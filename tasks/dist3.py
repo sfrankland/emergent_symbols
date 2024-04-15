@@ -48,9 +48,9 @@ def create_task(args, train_shapes, test_shapes):
 			test_proportion = 1 - train_proportion
 			# Create training/test set sizes
 			log.info('Desired training set size (' + str(args.train_set_size) + ') and test set size (' + str(args.test_set_size) + ') combined are larger than total number of possible trials for this task (' + str(total_trials) + ')...')
-			args.train_set_size = np.round(train_proportion * total_trials).astype(np.int)
+			args.train_set_size = np.round(train_proportion * total_trials).astype(np.int32)
 			log.info('Changing training set size to ' + str(args.train_set_size) + '...')
-			args.test_set_size = np.round(test_proportion * total_trials).astype(np.int)
+			args.test_set_size = np.round(test_proportion * total_trials).astype(np.int32)
 			log.info('Changing test set size to ' + str(args.test_set_size) + '...')
 		else:
 			log.info('Training set size = ' + str(args.train_set_size) + '...')
