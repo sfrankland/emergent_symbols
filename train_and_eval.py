@@ -152,7 +152,7 @@ def main():
 	# Model settings
 	parser.add_argument('--model_name', type=str, default='ESBN', help="{'ESBN', 'Transformer', 'NTM', 'LSTM', 'PrediNet', 'RN', 'MNM', 'TRN', 'ESBN_confidence_ablation', 'ESBN_default_memory'}")
 	parser.add_argument('--norm_type', type=str, default='contextnorm', help="{'nonorm', 'contextnorm', 'tasksegmented_contextnorm'}")
-	parser.add_argument('--encoder', type=str, default='mlp', help="{'conv', 'mlp', 'rand'}")
+	parser.add_argument('--encoder', type=str, default='conv', help="{'conv', 'mlp', 'rand'}")
 	# Task settings
 	parser.add_argument('--task', type=str, default='same_diff', help="{'same_diff', 'RMTS', 'dist3', 'identity_rules'}")
 	parser.add_argument('--train_gen_method', type=str, default='full_space', help="{'full_space', 'subsample'}")
