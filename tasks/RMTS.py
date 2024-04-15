@@ -34,13 +34,13 @@ def n_comb(n, r):
 
 # Create subsampled dataset
 def subsampled_dset(shapes, n_trials):
-	seq = np.array([]).astype(np.int)
-	targ = np.array([]).astype(np.int)
+	seq = np.array([]).astype(np.int32)
+	targ = np.array([]).astype(np.int32)
 	while seq.shape[0] < n_trials:
 		# Sample same trial
 		np.random.shuffle(shapes)
 		comb = shapes[:4]
-		same_targ = np.round(np.random.rand()).astype(np.int)
+		same_targ = np.round(np.random.rand()).astype(np.int32)
 		if same_targ == 0:
 			same_seq = [comb[0], comb[0], comb[1], comb[1], comb[2], comb[3]]
 		elif same_targ == 1:
@@ -58,7 +58,7 @@ def subsampled_dset(shapes, n_trials):
 					# Sample another same trial
 					np.random.shuffle(shapes)
 					comb = shapes[:4]
-					same_targ = np.round(np.random.rand()).astype(np.int)
+					same_targ = np.round(np.random.rand()).astype(np.int32)
 					if same_targ == 0:
 						same_seq = [comb[0], comb[0], comb[1], comb[1], comb[2], comb[3]]
 					elif same_targ == 1:
@@ -70,7 +70,7 @@ def subsampled_dset(shapes, n_trials):
 		# Sample different trial
 		np.random.shuffle(shapes)
 		comb = shapes[:5]
-		diff_targ = np.round(np.random.rand()).astype(np.int)
+		diff_targ = np.round(np.random.rand()).astype(np.int32)
 		if diff_targ == 0:
 			diff_seq = [comb[0], comb[1], comb[2], comb[3], comb[4], comb[4]]
 		elif diff_targ == 1:
@@ -84,7 +84,7 @@ def subsampled_dset(shapes, n_trials):
 				# Sample another same trial
 				np.random.shuffle(shapes)
 				comb = shapes[:5]
-				diff_targ = np.round(np.random.rand()).astype(np.int)
+				diff_targ = np.round(np.random.rand()).astype(np.int32)
 				if diff_targ == 0:
 					diff_seq = [comb[0], comb[1], comb[2], comb[3], comb[4], comb[4]]
 				elif diff_targ == 1:
