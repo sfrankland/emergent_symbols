@@ -34,8 +34,8 @@ def n_comb(n, r):
 
 # Create subsampled dataset
 def subsampled_dset(shapes, n_trials):
-	seq = np.array([]).astype(np.int)
-	targ = np.array([]).astype(np.int)
+	seq = np.array([]).astype(np.int32)
+	targ = np.array([]).astype(np.int32)
 	while seq.shape[0] < n_trials:
 		# Sample AAA trial
 		np.random.shuffle(shapes)
@@ -43,7 +43,7 @@ def subsampled_dset(shapes, n_trials):
 		A1 = comb[0]
 		A2 = comb[1]
 		np.random.shuffle(comb)
-		AAA_targ = np.where((comb == A2).astype(np.int))[0][0]
+		AAA_targ = np.where((comb == A2).astype(np.int32))[0][0]
 		AAA_seq = [A1, A1, A1, A2, A2] + builtins.list(comb)
 		if seq.shape[0] == 0:
 			seq = np.expand_dims(np.array(AAA_seq), 0)
@@ -61,7 +61,7 @@ def subsampled_dset(shapes, n_trials):
 					A1 = comb[0]
 					A2 = comb[1]
 					np.random.shuffle(comb)
-					AAA_targ = np.where((comb == A2).astype(np.int))[0][0]
+					AAA_targ = np.where((comb == A2).astype(np.int32))[0][0]
 					AAA_seq = [A1, A1, A1, A2, A2] + builtins.list(comb)
 					if not np.any(np.all(seq == np.tile(AAA_seq, [seq.shape[0], 1]), 1)):
 						sample_again = False
@@ -75,7 +75,7 @@ def subsampled_dset(shapes, n_trials):
 		A2 = comb[2]
 		B2 = comb[3]
 		np.random.shuffle(comb)
-		ABA_targ = np.where((comb == A2).astype(np.int))[0][0]
+		ABA_targ = np.where((comb == A2).astype(np.int32))[0][0]
 		ABA_seq = [A1, B1, A1, A2, B2] + builtins.list(comb)
 		if not np.any(np.all(seq == np.tile(ABA_seq, [seq.shape[0], 1]), 1)):
 			seq = np.append(seq, np.expand_dims(np.array(ABA_seq), 0), 0)
@@ -104,7 +104,7 @@ def subsampled_dset(shapes, n_trials):
 		A2 = comb[2]
 		B2 = comb[3]
 		np.random.shuffle(comb)
-		ABB_targ = np.where((comb == B2).astype(np.int))[0][0]
+		ABB_targ = np.where((comb == B2).astype(np.int32))[0][0]
 		ABB_seq = [A1, B1, B1, A2, B2] + builtins.list(comb)
 		if not np.any(np.all(seq == np.tile(ABB_seq, [seq.shape[0], 1]), 1)):
 			seq = np.append(seq, np.expand_dims(np.array(ABB_seq), 0), 0)
@@ -119,7 +119,7 @@ def subsampled_dset(shapes, n_trials):
 				A2 = comb[2]
 				B2 = comb[3]
 				np.random.shuffle(comb)
-				ABB_targ = np.where((comb == B2).astype(np.int))[0][0]
+				ABB_targ = np.where((comb == B2).astype(np.int32))[0][0]
 				ABB_seq = [A1, B1, B1, A2, B2] + builtins.list(comb)
 				if not np.any(np.all(seq == np.tile(ABB_seq, [seq.shape[0], 1]), 1)):
 					sample_again = False
@@ -150,7 +150,7 @@ def full_dset(shapes, n_trials):
 			for A2 in comb_minus_A1:
 				for choice_perm in all_comb_perm:
 					choice_perm = builtins.list(choice_perm)
-					AAA_targ = np.where((np.array(choice_perm) == A2).astype(np.int))[0][0]
+					AAA_targ = np.where((np.array(choice_perm) == A2).astype(np.int32))[0][0]
 					AAA_seq = [A1, A1, A1] + [A2, A2] + choice_perm
 					all_AAA_seq.append(AAA_seq)
 					all_AAA_targ.append(AAA_targ)
@@ -172,7 +172,7 @@ def full_dset(shapes, n_trials):
 					B2 = comb_minus_A2[0]
 					for choice_perm in all_comb_perm:
 						choice_perm = builtins.list(choice_perm)
-						ABA_targ = np.where((np.array(choice_perm) == A2).astype(np.int))[0][0]
+						ABA_targ = np.where((np.array(choice_perm) == A2).astype(np.int32))[0][0]
 						ABA_seq = [A1, B1, A1] + [A2, B2] + choice_perm
 						all_ABA_seq.append(ABA_seq)
 						all_ABA_targ.append(ABA_targ)
@@ -194,7 +194,7 @@ def full_dset(shapes, n_trials):
 					B2 = comb_minus_A2[0]
 					for choice_perm in all_comb_perm:
 						choice_perm = builtins.list(choice_perm)
-						ABB_targ = np.where((np.array(choice_perm) == B2).astype(np.int))[0][0]
+						ABB_targ = np.where((np.array(choice_perm) == B2).astype(np.int32))[0][0]
 						ABB_seq = [A1, B1, B1] + [A2, B2] + choice_perm
 						all_ABB_seq.append(ABB_seq)
 						all_ABB_targ.append(ABB_targ)
@@ -203,7 +203,7 @@ def full_dset(shapes, n_trials):
 	all_AAA_seq_augmented = deepcopy(all_AAA_seq)
 	all_AAA_targ_augmented = deepcopy(all_AAA_targ)
 	for a in range(max_trials_per_trial_type - len(all_AAA_seq)):
-		trial_ind = np.floor(np.random.rand() * len(all_AAA_seq)).astype(np.int)
+		trial_ind = np.floor(np.random.rand() * len(all_AAA_seq)).astype(np.int32)
 		all_AAA_seq_augmented.append(all_AAA_seq[trial_ind])
 		all_AAA_targ_augmented.append(all_AAA_targ[trial_ind])
 	all_AAA_seq = all_AAA_seq_augmented
@@ -242,9 +242,9 @@ def create_task(args, train_shapes, test_shapes):
 			test_proportion = 1 - train_proportion
 			# Create training/test set sizes
 			log.info('Desired training set size (' + str(args.train_set_size) + ') and test set size (' + str(args.test_set_size) + ') combined are larger than total number of possible trials for this task (' + str(total_trials) + ')...')
-			args.train_set_size = np.round(train_proportion * total_trials).astype(np.int)
+			args.train_set_size = np.round(train_proportion * total_trials).astype(np.int32)
 			log.info('Changing training set size to ' + str(args.train_set_size) + '...')
-			args.test_set_size = np.round(test_proportion * total_trials).astype(np.int)
+			args.test_set_size = np.round(test_proportion * total_trials).astype(np.int32)
 			log.info('Changing test set size to ' + str(args.test_set_size) + '...')
 		else:
 			log.info('Training set size = ' + str(args.train_set_size) + '...')
