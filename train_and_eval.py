@@ -144,9 +144,13 @@ def test(args, model, device, all_imgs, test_loader):
 	test_f.write('{:.4f}'.format(avg_loss) + ' ' + \
 				 '{:.2f}'.format(avg_acc))
 	test_f.close()
+	loss_results.append = avg_loss
+	acc_results.append = avg_acc
+return loss_results, acc_results
 
 def main():
-
+	loss_results = {}
+	acc_results = {}
 	# Settings
 	parser = argparse.ArgumentParser()
 	# Model settings
@@ -225,7 +229,9 @@ def main():
 		# Training loop
 		train(args, model, device, optimizer, epoch, all_imgs, train_loader)
 	# Test model
-	test(args, model, device, all_imgs, test_loader)
+	loss_results, acc_results = test(args, model, device, all_imgs, test_loader)
+	
 
 if __name__ == '__main__':
 	main()
+	plt.plot(loss_results)
