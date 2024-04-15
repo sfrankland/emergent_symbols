@@ -39,8 +39,8 @@ def create_task(args, train_shapes, test_shapes):
 		train_proportion = args.train_proportion
 		test_proportion = 1 - train_proportion
 		# Create training/test set sizes
-		args.train_set_size = np.round(train_proportion * total_trials).astype(np.int)
-		args.test_set_size = np.round(test_proportion * total_trials).astype(np.int)
+		args.train_set_size = np.round(train_proportion * total_trials).astype(np.int32)
+		args.test_set_size = np.round(test_proportion * total_trials).astype(np.int32)
 		log.info('Training set size = ' + str(args.train_set_size) + '...')
 		log.info('Test set size = ' + str(args.test_set_size) + '...')
 	# Otherwise, training and test sets are completely disjoint (in terms of the shapes that are used)
@@ -81,10 +81,10 @@ def create_task(args, train_shapes, test_shapes):
 		random.shuffle(same_trials)
 		random.shuffle(diff_trials)
 		# Split trials for train and test sets
-		same_trials_train = same_trials[:np.round(train_proportion * len(same_trials)).astype(np.int)]
-		same_trials_test = same_trials[np.round(train_proportion * len(same_trials)).astype(np.int):]
-		diff_trials_train = diff_trials[:np.round(train_proportion * len(diff_trials)).astype(np.int)]
-		diff_trials_test = diff_trials[np.round(train_proportion * len(diff_trials)).astype(np.int):]
+		same_trials_train = same_trials[:np.round(train_proportion * len(same_trials)).astype(np.int32)]
+		same_trials_test = same_trials[np.round(train_proportion * len(same_trials)).astype(np.int32):]
+		diff_trials_train = diff_trials[:np.round(train_proportion * len(diff_trials)).astype(np.int32)]
+		diff_trials_test = diff_trials[np.round(train_proportion * len(diff_trials)).astype(np.int32):]
 	# Otherwise, training and test sets are completely disjoint (in terms of the shapes that are used), and can be generated separately
 	else:
 		# Create all possible training trials
@@ -114,10 +114,10 @@ def create_task(args, train_shapes, test_shapes):
 	# Duplicate 'same' trials to match number of 'different' trials
 	same_trials_train_balanced = []
 	for t in range(len(diff_trials_train)):
-		same_trials_train_balanced.append(same_trials_train[np.floor(np.random.rand()*len(same_trials_train)).astype(np.int)])
+		same_trials_train_balanced.append(same_trials_train[np.floor(np.random.rand()*len(same_trials_train)).astype(np.int32)])
 	same_trials_test_balanced = []
 	for t in range(len(diff_trials_test)):
-		same_trials_test_balanced.append(same_trials_test[np.floor(np.random.rand()*len(same_trials_test)).astype(np.int)])
+		same_trials_test_balanced.append(same_trials_test[np.floor(np.random.rand()*len(same_trials_test)).astype(np.int32)])
 	# Combine all same and different trials for training set
 	all_train_seq = []
 	all_train_targ = []
