@@ -89,9 +89,11 @@ def train(args, model, device, optimizer, epoch, all_imgs, train_loader):
 					 '[Accuracy = ' + '{:.2f}'.format(acc) + '] ' + \
 					 '[' + '{:.3f}'.format(batch_dur) + ' sec/batch]')
 			# Save progress to file
-			train_prog_f.write(str(batch_idx) + ' ' +\
-							   '{:.4f}'.format(loss.item()) + ' ' + \
+			train_prog_f.write(str(batch_idx) + ',' +\
+							   '{:.4f}'.format(loss.item()) + ',' + \
 							   '{:.2f}'.format(acc) + '\n')
+				
+	
 	train_prog_f.close()
 
 def test(args, model, device, all_imgs, test_loader, loss_results, acc_results):
