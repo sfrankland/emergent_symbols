@@ -144,7 +144,7 @@ def test(args, model, device, all_imgs, test_loader, loss_results, acc_results):
 	test_f.write('{:.4f}'.format(avg_loss) + ' ' + \
 				 '{:.2f}'.format(avg_acc))
 	test_f.close()
-	loss_results.append(avg_loss
+	loss_results.append(avg_loss)
 	acc_results.append(avg_acc)
 	return loss_results, acc_results
 
