@@ -230,9 +230,10 @@ def main():
 		train(args, model, device, optimizer, epoch, all_imgs, train_loader)
 	# Test model
 	loss_results, acc_results = test(args, model, device, all_imgs, test_loader, loss_results, acc_results)
+	return loss_results, acc_results
 	
 
 if __name__ == '__main__':
-	main()
+	loss_results, acc_results = main()
 	import matplotlib.pyplot as plt
 	plt.plot(loss_results)
