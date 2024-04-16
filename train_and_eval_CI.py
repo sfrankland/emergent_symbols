@@ -256,7 +256,9 @@ def main():
 		# Generate training and test sets
 		task_gen = __import__(args.task)
 		log.info('Generating task: ' + args.task + '...')
-
+		#args, train_set, test_set = task_gen.create_task(args, train_shapes, test_shapes)
+		task_gen.y_dim = S
+		
 
 	#for relational generalization tasks.
 	else:
