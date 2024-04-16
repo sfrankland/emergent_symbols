@@ -200,6 +200,7 @@ def main():
 	task_gen = __import__(args.task)
 	log.info('Generating task: ' + args.task + '...')
 	args, train_set, test_set = task_gen.create_task(args, train_shapes, test_shapes)
+	
 	# Convert to PyTorch DataLoaders
 	train_set = seq_dataset(train_set, args)
 	train_loader = DataLoader(train_set, batch_size=args.train_batch_size, shuffle=True)
@@ -216,7 +217,6 @@ def main():
 
 	# Create model
 	model_class = __import__(args.model_name)
-	task_gen.y_dim = S
 	model = model_class.Model(task_gen, args).to(device)
 
 	# Append relevant hyperparameter values to model name
