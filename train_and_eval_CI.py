@@ -305,13 +305,24 @@ def main():
 
 	# Train
 	log.info('Training begins...')
-	for epoch in range(1, args.epochs + 1):
-		# Training loop
-		train(args, model, device, optimizer, epoch, all_imgs, train_loader)
-	# Test model
-	loss_results, acc_results = test(args, model, device, all_imgs, test_loader, loss_results, acc_results)
-	return loss_results, acc_results
 	
+
+###for catastrophic interference task
+	if args.task == "concurrent_training" or "sequential_training":
+				for epoch in range(1, args.epochs + 1):
+			# Training loop
+			train(args, model, device, optimizer, epoch, k, train_loader)
+		# Test model
+		loss_results, acc_results = test(args, model, device, k, test_loader, loss_results, acc_results)
+		return loss_results, acc_results
+	else:
+		for epoch in range(1, args.epochs + 1):
+			# Training loop
+			train(args, model, device, optimizer, epoch, all_imgs, train_loader)
+		# Test model
+		loss_results, acc_results = test(args, model, device, all_imgs, test_loader, loss_results, acc_results)
+		return loss_results, acc_results
+		
 
 if __name__ == '__main__':
 	loss_results, acc_results = main()
