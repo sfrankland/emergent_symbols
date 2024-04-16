@@ -61,7 +61,10 @@ def train(args, model, device, optimizer, epoch, all_imgs, train_loader):
 		# Batch start time
 		start_time = time.time()
 		# Use sequence indices to slice corresponding images
-		x_seq = all_imgs[seq_ind,:,:]
+		
+		#x_seq = all_imgs[seq_ind,:,:]
+		x_seq = all_imgs[seq_ind,:]
+
 		# Load data to device
 		x_seq = x_seq.to(device)
 		y = y.to(device)
