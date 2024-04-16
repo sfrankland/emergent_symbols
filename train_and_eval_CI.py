@@ -258,7 +258,8 @@ def main():
 		log.info('Generating task: ' + args.task + '...')
 		#args, train_set, test_set = task_gen.create_task(args, train_shapes, test_shapes)
 		task_gen.y_dim = S
-		
+		task_gen.seq_len = S*2 +4
+
 
 	#for relational generalization tasks.
 	else:
