@@ -194,6 +194,7 @@ def main():
 
 ###for catastrophic interference task
 	if args.task == "concurrent_training" or "sequential_training":
+		print('catastrophic interference')
 		#generate codes for numbers.
 		max_int = 50
 		#size
@@ -251,6 +252,10 @@ def main():
 		tensor_y_twos = torch.Tensor(data_y_twos)
 		twos_dataset = TensorDataset(tensor_x_twos,tensor_y_twos) # create your datset
 		train_twos_loader = DataLoader(twos_dataset) # create your dataloader
+
+		# Generate training and test sets
+		task_gen = __import__(args.task)
+		log.info('Generating task: ' + args.task + '...')
 
 
 	#for relational generalization tasks.
