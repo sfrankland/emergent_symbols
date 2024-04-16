@@ -52,5 +52,6 @@ def create_task(args, train_shapes, test_shapes):
 	# # Create training and test sets
 	# train_set = {'seq_ind': all_train_seq, 'y': all_train_targ}
 	# test_set = {'seq_ind': all_test_seq, 'y': all_test_targ}
+	args.y_dim = S
 
 	return args, train_set, test_set
