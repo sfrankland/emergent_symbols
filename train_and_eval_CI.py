@@ -7,7 +7,12 @@ from PIL import Image
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset, TensorDataset, DataLoader
+import torchvision.transforms as transforms
+import matplotlib.pyplot as plt
+import numpy as np
+import random
+
 
 # Prevent python from saving out .pyc files
 sys.dont_write_bytecode = True
