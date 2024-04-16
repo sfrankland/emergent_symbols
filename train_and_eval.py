@@ -216,7 +216,7 @@ def main():
 
 	# Create model
 	model_class = __import__(args.model_name)
-	args.y_dim = S
+	task_gen.y_dim = S
 	model = model_class.Model(task_gen, args).to(device)
 
 	# Append relevant hyperparameter values to model name
