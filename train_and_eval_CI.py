@@ -188,8 +188,7 @@ def main():
 	kwargs = {'num_workers': 1, 'pin_memory': True} if use_cuda else {}
 
 ###for catastrophic interference task
-
-	if args.task == "concurrent_training" || "sequential_training":
+	if args.task == "concurrent_training" or "sequential_training":
 		#generate codes for numbers.
 		max_int = 50
 		#size
