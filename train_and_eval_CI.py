@@ -309,7 +309,7 @@ def main():
 
 ###for catastrophic interference task
 	if args.task == "concurrent_training" or "sequential_training":
-				for epoch in range(1, args.epochs + 1):
+		for epoch in range(1, args.epochs + 1):
 			# Training loop
 			train(args, model, device, optimizer, epoch, k, train_loader)
 		# Test model
