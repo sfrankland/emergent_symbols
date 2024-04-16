@@ -187,32 +187,98 @@ def main():
 	device = torch.device("cuda:" + str(args.device) if use_cuda else "cpu")
 	kwargs = {'num_workers': 1, 'pin_memory': True} if use_cuda else {}
 
-	# Randomly assign objects to training or test set
-	all_shapes = np.arange(args.n_shapes)
-	np.random.shuffle(all_shapes)
-	if args.m_holdout > 0:
-		train_shapes = all_shapes[args.m_holdout:]
-		test_shapes = all_shapes[:args.m_holdout]
-	else:
-		train_shapes = all_shapes
-		test_shapes = all_shapes
-	# Generate training and test sets
-	task_gen = __import__(args.task)
-	log.info('Generating task: ' + args.task + '...')
-	args, train_set, test_set = task_gen.create_task(args, train_shapes, test_shapes)
-	# Convert to PyTorch DataLoaders
-	train_set = seq_dataset(train_set, args)
-	train_loader = DataLoader(train_set, batch_size=args.train_batch_size, shuffle=True)
-	test_set = seq_dataset(test_set, args)
-	test_loader = DataLoader(test_set, batch_size=args.test_batch_size, shuffle=True)
+###for catastrophic interference task
 
-	# Load images
-	all_imgs = []
-	for i in range(args.n_shapes):
-		img_fname = './imgs/' + str(i) + '.png'
-		img = torch.Tensor(np.array(Image.open(img_fname))) / 255.
-		all_imgs.append(img)
-	all_imgs = torch.stack(all_imgs, 0)
+	if args.task == "concurrent_training" || "sequential_training":
+		#generate codes for numbers.
+		max_int = 50
+		#size
+		S=20
+		k = np.random.randint(2, size=(max_int, S))
+
+		#the "add 1" problem
+		ones_x_=np.empty([max_int, S*2 + 4])
+		ones_y_=np.empty([max_int, S])
+
+		##the "add 2" problem.
+		twos_x_=np.empty([max_int, S*2 + 4])
+		twos_y_=np.empty([max_int, S])
+
+		for i in range(0,max_int-2):
+			    #add one
+			    ones_x_[i,:] = np.concatenate((k[i,:], k[0,:], [1,0,0,1]))
+			    #add two
+			    twos_x_[i,:] = np.concatenate((k[i,:], k[1,:], [0,1,1,0]))
+			    #add 1: target is i+1
+			    ones_y_[i,:] = k[i+1,:]
+			    #add 2: target is i+2
+			    twos_y_[i,:] = k[i+2,:]
+
+		data_x_ = np.concatenate((ones_x_[0:10, :], twos_x_[0:10, :]))
+		data_y_ = np.concatenate((ones_y_[0:10, :], twos_y_[0:10, :]))
+		idx = random.sample(range(0,20), 20)
+		shuffled_data_x = data_x_[idx,:]
+		shuffled_data_y = data_y_[idx,:]
+
+		####concurrent (interleaved) training of both tasks####
+		tensor_x = torch.Tensor(shuffled_data_x) # transform to torch tensor
+		tensor_y = torch.Tensor(shuffled_data_y)
+
+		dataset = TensorDataset(tensor_x,tensor_y) # create your datset
+		train_loader = DataLoader(dataset) # create your dataloader
+
+		epochs=5000
+		total_results=[]
+
+		data_x_ones = ones_x_[0:10, :]
+		data_y_ones = ones_y_[0:10, :]
+
+		data_x_twos = twos_x_[0:10, :]
+		data_y_twos = twos_y_[0:10, :]
+
+		#train add 1 first.
+		tensor_x = torch.Tensor(data_x_ones) # transform to torch tensor
+		tensor_y = torch.Tensor(data_y_ones)
+		dataset = TensorDataset(tensor_x,tensor_y) # create your datset
+		train_ones_loader = DataLoader(dataset) # create your dataloader
+
+		#train add 2.
+		tensor_x_twos = torch.Tensor(data_x_twos) # transform to torch tensor
+		tensor_y_twos = torch.Tensor(data_y_twos)
+		twos_dataset = TensorDataset(tensor_x_twos,tensor_y_twos) # create your datset
+		train_twos_loader = DataLoader(twos_dataset) # create your dataloader
+
+
+	#for relational generalization tasks.
+	else:
+
+		# Randomly assign objects to training or test set
+		all_shapes = np.arange(args.n_shapes)
+		np.random.shuffle(all_shapes)
+		if args.m_holdout > 0:
+			train_shapes = all_shapes[args.m_holdout:]
+			test_shapes = all_shapes[:args.m_holdout]
+		else:
+			train_shapes = all_shapes
+			test_shapes = all_shapes
+		# Generate training and test sets
+		task_gen = __import__(args.task)
+		log.info('Generating task: ' + args.task + '...')
+		args, train_set, test_set = task_gen.create_task(args, train_shapes, test_shapes)
+		
+		# Convert to PyTorch DataLoaders
+		train_set = seq_dataset(train_set, args)
+		train_loader = DataLoader(train_set, batch_size=args.train_batch_size, shuffle=True)
+		test_set = seq_dataset(test_set, args)
+		test_loader = DataLoader(test_set, batch_size=args.test_batch_size, shuffle=True)
+
+		# Load images
+		all_imgs = []
+		for i in range(args.n_shapes):
+			img_fname = './imgs/' + str(i) + '.png'
+			img = torch.Tensor(np.array(Image.open(img_fname))) / 255.
+			all_imgs.append(img)
+		all_imgs = torch.stack(all_imgs, 0)
 
 	# Create model
 	model_class = __import__(args.model_name)
