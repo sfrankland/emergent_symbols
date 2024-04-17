@@ -43,9 +43,9 @@ def train(args, model, device, optimizer, epoch, all_imgs, train_loader):
 	gen_dir = task_dir + 'm' + str(args.m_holdout) + '/'
 	check_path(gen_dir)
 	model_dir = gen_dir + args.model_name + '/'
-	check_path(model_dir)
-	run_dir = model_dir + 'run' + args.run + '/'
-	check_path(run_dir)
+	# check_path(model_dir)
+	# run_dir = model_dir + 'run' + args.run + '/'
+	#check_path(run_dir)
 	train_prog_fname = run_dir + 'epoch_' + str(epoch) + '.txt'
 	train_prog_f = open(train_prog_fname, 'w')
 	train_prog_f.write('batch loss acc\n')
