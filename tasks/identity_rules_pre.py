@@ -303,9 +303,12 @@ def create_task(args, train_shapes, test_shapes):
 		elif args.train_gen_method == 'full_space':
 			print('going to run')
 			train_seq, train_targ = full_dset(train_shapes, args.train_set_size)
+			print(train_seq)
+			print(train_targ)
 		if args.test_gen_method == 'subsample':
 			test_seq, test_targ = subsampled_dset(test_shapes, args.test_set_size)
 		elif args.test_gen_method == 'full_space':
+			print('going to run test')
 			test_seq, test_targ = full_dset(test_shapes, args.test_set_size)
 
 	print('create sets')
