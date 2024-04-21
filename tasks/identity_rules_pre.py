@@ -221,6 +221,7 @@ def full_dset(shapes, n_trials):
 	# Select subset
 	seq = seq[:n_trials,:]
 	targ = targ[:n_trials]
+	print('end')
 	return seq, targ
 
 # Task generator
