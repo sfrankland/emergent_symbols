@@ -222,6 +222,8 @@ def full_dset(shapes, n_trials):
 	seq = seq[:n_trials,:]
 	targ = targ[:n_trials]
 	print('end')
+	print(seq)
+	print(targ)
 	return seq, targ
 
 # Task generator
