@@ -304,6 +304,7 @@ def create_task(args, train_shapes, test_shapes):
 		elif args.test_gen_method == 'full_space':
 			test_seq, test_targ = full_dset(test_shapes, args.test_set_size)
 
+	print('create sets')
 	# Create training and test sets
 	train_set = {'seq_ind': train_seq, 'y': train_targ}
 	test_set = {'seq_ind': test_seq, 'y': test_targ}
