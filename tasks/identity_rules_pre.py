@@ -204,7 +204,7 @@ def full_dset(shapes, n_trials):
 	all_AAA_seq_augmented = deepcopy(all_AAA_seq)
 	all_AAA_targ_augmented = deepcopy(all_AAA_targ)
 	for a in range(max_trials_per_trial_type - len(all_AAA_seq)):
-		print('here')
+		print('a')
 		trial_ind = np.floor(np.random.rand() * len(all_AAA_seq)).astype(np.int32)
 		all_AAA_seq_augmented.append(all_AAA_seq[trial_ind])
 		all_AAA_targ_augmented.append(all_AAA_targ[trial_ind])
