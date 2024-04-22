@@ -143,7 +143,7 @@ def test(args, model, device, all_imgs, test_loader, loss_results, acc_results):
 	test_fname = model_dir + 'run' + args.run + '.txt'
 	test_f = open(test_fname, 'w')
 	test_f.write('loss acc\n')
-	test_f.write('{:.4f}'.format(avg_loss) + ' ' + \
+	test_f.write('{:.4f}'.format(avg_loss) + ',' + \
 				 '{:.2f}'.format(avg_acc))
 	test_f.close()
 	loss_results.append(avg_loss)
